@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLDAS — Child Labour Detection & Awareness System | Gov. of India</title>
+  <meta name="description" content="AI-powered Government Child Labour Monitoring & Analytics Platform" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <!-- AOS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <!-- Leaflet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" rel="stylesheet" />
+  <!-- Custom -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOADING SCREEN
+════════════════════════════════════════════════════════════════ -->
+<div id="loadingScreen">
+  <div class="ls-bg"></div>
+  <div class="ls-content">
+    <div class="ls-orbit">
+      <div class="ls-ring"></div>
+      <div class="ls-ring"></div>
+      <div class="ls-ring"></div>
+      <div class="ls-icon"><i class="fas fa-child-reaching"></i></div>
+    </div>
+    <div class="ls-title">CLDAS</div>
+    <div class="ls-sub">Child Labour Detection &amp; Awareness System · Government of India</div>
+    <div class="ls-bar-wrap"><div class="ls-bar"></div></div>
+    <div class="ls-dots"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SIDEBAR BACKDROP (mobile)
+════════════════════════════════════════════════════════════════ -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <!-- Header -->
+  <div class="sb-header">
+    <div class="sb-brand-icon"><i class="fas fa-child-reaching"></i></div>
+    <div class="sb-brand-text">
+      <span class="sb-brand-name">CLDAS</span>
+      <span class="sb-brand-sub">Ministry of Labour</span>
+    </div>
+    <button class="sb-collapse-btn" id="collapseBtn" title="Collapse sidebar">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+  </div>
+
+  <!-- Search -->
+  <div class="sb-search">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Search pages…" id="sidebarSearch" />
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sb-nav">
+    <div class="sb-section">Main</div>
+
+    <a class="nav-link active" data-page="dashboard" data-title="Dashboard Overview" href="#">
+      <i class="fas fa-chart-pie"></i>
+      <span class="nav-text">Dashboard Overview</span>
+      <span class="nav-badge live">Live</span>
+    </a>
+    <a class="nav-link" data-page="analytics" data-title="Analytics" href="#">
+      <i class="fas fa-chart-bar"></i>
+      <span class="nav-text">Labour Analytics</span>
+    </a>
+    <a class="nav-link" data-page="risk" data-title="Risk Prediction" href="#">
+      <i class="fas fa-robot"></i>
+      <span class="nav-text">AI Risk Predictor</span>
+      <span class="nav-badge ai">AI</span>
+    </a>
+
+    <div class="sb-section">Resources</div>
+
+    <a class="nav-link" data-page="awareness" data-title="Awareness Center" href="#">
+      <i class="fas fa-book-open"></i>
+      <span class="nav-text">Awareness Center</span>
+    </a>
+    <a class="nav-link" data-page="rescue" data-title="Rescue & Complaints" href="#">
+      <i class="fas fa-hands-helping"></i>
+      <span class="nav-text">Rescue &amp; Complaints</span>
+    </a>
+    <a class="nav-link" data-page="map" data-title="India Map" href="#">
+      <i class="fas fa-map-marked-alt"></i>
+      <span class="nav-text">India Live Map</span>
+      <span class="nav-badge new">New</span>
+    </a>
+
+    <div class="sb-section">Management</div>
+
+    <a class="nav-link" data-page="ngo" data-title="NGO Management" href="#">
+      <i class="fas fa-building-ngo"></i>
+      <span class="nav-text">NGO Management</span>
+    </a>
+    <a class="nav-link" data-page="reports" data-title="Reports" href="#">
+      <i class="fas fa-file-chart-column"></i>
+      <span class="nav-text">Reports &amp; Downloads</span>
+    </a>
+    <a class="nav-link" data-page="recommendations" data-title="AI Recommendations" href="#">
+      <i class="fas fa-lightbulb"></i>
+      <span class="nav-text">AI Recommendations</span>
+      <span class="nav-badge ai">AI</span>
+    </a>
+
+    <div class="sb-section">System</div>
+
+    <a class="nav-link" data-page="calendar" data-title="Calendar" href="#">
+      <i class="fas fa-calendar-days"></i>
+      <span class="nav-text">Campaign Calendar</span>
+    </a>
+    <a class="nav-link" data-page="settings" data-title="Settings" href="#">
+      <i class="fas fa-gear"></i>
+      <span class="nav-text">Settings</span>
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <div class="sb-footer">
+    <div class="sb-user">
+      <div class="sb-avatar"><i class="fas fa-user-shield"></i></div>
+      <div class="sb-user-info">
+        <span class="sb-user-name">Admin Officer</span>
+        <span class="sb-user-role">Ministry of Labour</span>
+      </div>
+      <i class="fas fa-ellipsis-v sb-user-more ms-auto" style="color:var(--text-3)"></i>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN WRAPPER
+════════════════════════════════════════════════════════════════ -->
+<div class="main-wrapper" id="mainWrapper">
+
+  <!-- ─── TOPBAR ─── -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+      <div class="topbar-breadcrumb">
+        <div class="tb-page-icon"><i id="tbIcon" class="fas fa-chart-pie"></i></div>
+        <span class="tb-title" id="tbTitle">Dashboard Overview</span>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <!-- Global search -->
+      <div class="tb-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Quick search…" id="globalSearch" />
+      </div>
+
+      <!-- Theme toggle -->
+      <button class="tb-icon-btn" id="themeToggle" title="Toggle Theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+
+      <!-- Notifications -->
+      <button class="tb-icon-btn" id="notifBtn" title="Notifications">
+        <i class="fas fa-bell"></i>
+        <span class="tb-badge"></span>
+      </button>
+
+      <!-- Export -->
+      <button class="tb-icon-btn" title="Export Data" onclick="exportData()">
+        <i class="fas fa-download"></i>
+      </button>
+
+      <!-- Profile -->
+      <div class="tb-profile" id="tbProfile">
+        <div class="tb-profile-avatar"><i class="fas fa-user-shield"></i></div>
+        <span class="tb-profile-name">Admin Officer</span>
+        <i class="fas fa-chevron-down tb-profile-caret" style="font-size:10px;opacity:0.5"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── NOTIFICATION PANEL ─── -->
+  <div class="notif-panel" id="notifPanel">
+    <div class="np-head">
+      <span>Notifications</span>
+      <span class="np-count">5 New</span>
+    </div>
+    <div class="np-list">
+      <div class="np-item unread">
+        <i class="np-item-icon fas fa-exclamation-circle" style="color:var(--danger)"></i>
+        <div><p>High Risk case detected in Bihar — immediate action required</p><small>2 mins ago</small></div>
+      </div>
+      <div class="np-item unread">
+        <i class="np-item-icon fas fa-child" style="color:var(--warning)"></i>
+        <div><p>3 children rescued from brick kiln in Rajasthan</p><small>18 mins ago</small></div>
+      </div>
+      <div class="np-item unread">
+        <i class="np-item-icon fas fa-file-alt" style="color:var(--secondary)"></i>
+        <div><p>Monthly analytics report has been generated</p><small>1 hour ago</small></div>
+      </div>
+      <div class="np-item">
+        <i class="np-item-icon fas fa-building-ngo" style="color:var(--success)"></i>
+        <div><p>CRY Foundation updated 12 active cases</p><small>3 hours ago</small></div>
+      </div>
+      <div class="np-item">
+        <i class="np-item-icon fas fa-map-marker-alt" style="color:var(--accent)"></i>
+        <div><p>New complaint registered in Uttar Pradesh</p><small>5 hours ago</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTENT AREA — ALL PAGES
+  ════════════════════════════════════════════════════════════ -->
+  <main class="content-area">
+
+    <!-- ════════════════════ PAGE: DASHBOARD ════════════════════ -->
+    <section class="page active" id="page-dashboard">
+
+      <!-- Welcome Banner -->
+      <div class="welcome-banner" data-aos="fade-down">
+        <div>
+          <div class="wb-title">Welcome back, <span>Admin Officer</span> 👋</div>
+          <div class="wb-sub">Real-time monitoring · <span id="currentDate"></span> · <span class="live-chip" style="font-size:0.7rem">Live Data</span></div>
+        </div>
+        <div class="wb-actions">
+          <button class="btn btn-ghost" onclick="exportData()"><i class="fas fa-download"></i> Export Data</button>
+          <button class="btn btn-primary"><i class="fas fa-plus"></i> Add Report</button>
+        </div>
+      </div>
+
+      <!-- KPI Row 1 -->
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+          <div class="stat-card sc-blue">
+            <div class="sc-top">
+              <div class="sc-icon"><i class="fas fa-child"></i></div>
+              <div class="sc-trend up"><i class="fas fa-arrow-up"></i> 12.4%</div>
+            </div>
+            <div>
+              <span class="sc-label">Children Monitored</span>
+              <span class="sc-value counter" data-target="124580">0</span>
+              <span class="sc-sub">Across 28 states</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="80">
+          <div class="stat-card sc-red">
+            <div class="sc-top">
+              <div class="sc-icon"><i class="fas fa-triangle-exclamation"></i></div>
+              <div class="sc-trend down"><i class="fas fa-arrow-down"></i> 3.2%</div>
+            </div>
+            <div>
+              <span class="sc-label">Cases Detected</span>
+              <span class="sc-value counter" data-target="38742">0</span>
+              <span class="sc-sub">Down from last month</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="160">
+          <div class="stat-card sc-green">
+            <div class="sc-top">
+              <div class="sc-icon"><i class="fas fa-hands-holding-child"></i></div>
+              <div class="sc-trend up"><i class="fas fa-arrow-up"></i> 8.7%</div>
+            </div>
+            <div>
+              <span class="sc-label">Children Rescued</span>
+              <span class="sc-value counter" data-target="29415">0</span>
+              <span class="sc-sub">75.9% rescue rate</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
+          <div class="stat-card sc-purple">
+            <div class="sc-top">
+              <div class="sc-icon"><i class="fas fa-school"></i></div>
+              <div class="sc-trend up"><i class="fas fa-arrow-up"></i> 15.1%</div>
+            </div>
+            <div>
+              <span class="sc-label">Re-Enrolled in School</span>
+              <span class="sc-value counter" data-target="21836">0</span>
+              <span class="sc-sub">74.2% of rescued</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Row 2 -->
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3" data-aos="fade-up">
+          <div class="stat-card sc-cyan">
+            <div class="sc-top"><div class="sc-icon"><i class="fas fa-bullhorn"></i></div></div>
+            <div><span class="sc-label">Campaigns Conducted</span><span class="sc-value counter" data-target="1842">0</span></div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="60">
+          <div class="stat-card sc-blue">
+            <div class="sc-top"><div class="sc-icon"><i class="fas fa-building-ngo"></i></div></div>
+            <div><span class="sc-label">Active NGOs</span><span class="sc-value counter" data-target="347">0</span></div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="120">
+          <div class="stat-card sc-orange">
+            <div class="sc-top"><div class="sc-icon"><i class="fas fa-gavel"></i></div></div>
+            <div><span class="sc-label">FIRs Filed</span><span class="sc-value counter" data-target="5621">0</span></div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="180">
+          <div class="stat-card sc-green">
+            <div class="sc-top"><div class="sc-icon"><i class="fas fa-hand-holding-heart"></i></div></div>
+            <div><span class="sc-label">Families Aided</span><span class="sc-value counter" data-target="18290">0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row 1 -->
+      <div class="row g-4 mb-4">
+        <div class="col-lg-8" data-aos="fade-right">
+          <div class="card accent-blue">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Monthly Case Trend</div>
+                <div class="card-sub">Detection vs Rescue (2024 – 2025)</div>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-ghost btn-sm chart-yr-btn active" data-yr="2024">2024</button>
+                <button class="btn btn-ghost btn-sm chart-yr-btn" data-yr="2025">2025</button>
+              </div>
+            </div>
+            <canvas id="lineChart" height="100"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="card accent-purple" style="height:100%">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Sector Distribution</div>
+                <div class="card-sub">Child labour by industry</div>
+              </div>
+            </div>
+            <canvas id="doughnutChart" height="190"></canvas>
+            <div id="doughnutLegend" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row 2 -->
+      <div class="row g-4 mb-4">
+        <div class="col-lg-5" data-aos="fade-right">
+          <div class="card accent-cyan">
+            <div class="card-header"><div class="card-title">Top 10 States — Cases</div></div>
+            <canvas id="barChart" height="170"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-4" data-aos="fade-up">
+          <div class="card accent-green">
+            <div class="card-header"><div class="card-title">Outcome Distribution</div></div>
+            <canvas id="pieChart" height="200"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-3" data-aos="fade-left">
+          <div class="card" style="height:100%">
+            <div class="card-header"><div class="card-title">Goal Progress</div></div>
+            <div class="prog-row"><div class="prog-label"><span>Rescue Target</span><span>76%</span></div><div class="progress-track"><div class="progress-fill pf-blue" style="width:0" data-w="76%"></div></div></div>
+            <div class="prog-row"><div class="prog-label"><span>Re-Enrollment</span><span>58%</span></div><div class="progress-track"><div class="progress-fill pf-accent" style="width:0" data-w="58%"></div></div></div>
+            <div class="prog-row"><div class="prog-label"><span>Awareness Reach</span><span>89%</span></div><div class="progress-track"><div class="progress-fill pf-cyan" style="width:0" data-w="89%"></div></div></div>
+            <div class="prog-row"><div class="prog-label"><span>FIR Conviction</span><span>43%</span></div><div class="progress-track"><div class="progress-fill pf-warn" style="width:0" data-w="43%"></div></div></div>
+            <div class="prog-row"><div class="prog-label"><span>NGO Coverage</span><span>67%</span></div><div class="progress-track"><div class="progress-fill pf-green" style="width:0" data-w="67%"></div></div></div>
+            <div class="prog-row mb-0"><div class="prog-label"><span>Digital Reach</span><span>54%</span></div><div class="progress-track"><div class="progress-fill pf-danger" style="width:0" data-w="54%"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline + News -->
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fas fa-clock me-2" style="color:var(--primary-light)"></i>Activity Timeline</div>
+            </div>
+            <div class="timeline" id="activityTimeline"></div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fas fa-newspaper me-2" style="color:var(--accent)"></i>Latest News</div>
+            </div>
+            <div id="newsFeed"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Insights Panel -->
+      <div class="row g-4 mb-4">
+        <div class="col-12" data-aos="fade-up">
+          <div class="card" style="background:linear-gradient(135deg,rgba(79,70,229,0.06),rgba(139,92,246,0.04));border-color:rgba(79,70,229,0.2)">
+            <div class="card-header">
+              <div>
+                <div class="card-title"><i class="fas fa-brain me-2" style="color:var(--accent)"></i>AI Insights Panel</div>
+                <div class="card-sub">Auto-generated by CLDAS Intelligence Engine v2.4</div>
+              </div>
+              <span class="ai-chip"><i class="fas fa-microchip"></i>AI-Powered</span>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-4"><div class="insight-card ai-glow"><span class="ic-icon">📈</span><div class="ic-title">Trend Forecast</div><p class="ic-text">Cases expected to decrease by <strong>18%</strong> in Q4 2025 if current rescue pace continues.</p></div></div>
+              <div class="col-md-4"><div class="insight-card warn-glow"><span class="ic-icon">⚠️</span><div class="ic-title">High-Risk Alert</div><p class="ic-text"><strong>UP &amp; Bihar</strong> show 34% spike in agricultural child labour. Immediate intervention needed.</p></div></div>
+              <div class="col-md-4"><div class="insight-card success-glow"><span class="ic-icon">🎓</span><div class="ic-title">Education Impact</div><p class="ic-text">States with active mid-day meal schemes show <strong>61%</strong> higher re-enrollment among rescued children.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: ANALYTICS ════════════════════ -->
+    <section class="page" id="page-analytics">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>Child Labour Analytics</h2>
+        <p>Detailed breakdown by age, gender, sector and year-over-year comparison</p>
+      </div>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="card accent-blue"><div class="card-header"><div class="card-title">Age Group Distribution</div></div><canvas id="ageChart" height="200"></canvas></div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <div class="card accent-purple"><div class="card-header"><div class="card-title">Gender Distribution</div></div><canvas id="genderChart" height="200"></canvas></div>
+        </div>
+      </div>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-7" data-aos="fade-right">
+          <div class="card accent-cyan"><div class="card-header"><div class="card-title">Sector-wise Child Labour</div></div><canvas id="sectorChart" height="160"></canvas></div>
+        </div>
+        <div class="col-lg-5" data-aos="fade-left">
+          <div class="card accent-orange">
+            <div class="card-header"><div class="card-title">Monthly Incident Heatmap</div></div>
+            <div id="heatmapGrid" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-12" data-aos="fade-up">
+          <div class="card accent-green"><div class="card-header"><div class="card-title">Year-over-Year Trend</div><span class="ai-chip"><i class="fas fa-chart-area"></i> Multi-Year</span></div><canvas id="yoyChart" height="80"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: RISK PREDICTOR ════════════════════ -->
+    <section class="page" id="page-risk">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>AI Risk Prediction Engine</h2>
+        <p>Assess child labour risk using machine learning across 6 socioeconomic parameters</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="card accent-blue">
+            <div class="card-header">
+              <div><div class="card-title"><i class="fas fa-robot me-2" style="color:var(--primary-light)"></i>Risk Assessment Form</div></div>
+              <span class="ai-chip"><i class="fas fa-microchip"></i>ML Model v2.4</span>
+            </div>
+            <div class="risk-form-grid mb-4">
+              <div class="form-group">
+                <label class="form-label"><i class="fas fa-birthday-cake"></i>Child Age</label>
+                <select id="riskAge" class="form-control"><option value="">Select age range</option><option value="5">5–8 years</option><option value="9">9–12 years</option><option value="13">13–15 years</option><option value="16">15–18 years</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label"><i class="fas fa-rupee-sign"></i>Family Income</label>
+                <select id="riskIncome" class="form-control"><option value="">Select range</option><option value="1">Below ₹3,000</option><option value="2">₹3,000–₹6,000</option><option value="3">₹6,000–₹10,000</option><option value="4">Above ₹10,000</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label"><i class="fas fa-school"></i>Education Level</label>
+                <select id="riskEducation" class="form-control"><option value="">Select level</option><option value="1">No schooling</option><option value="2">Dropped out</option><option value="3">Primary (1–5)</option><option value="4">Middle School+</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label"><i class="fas fa-clock"></i>Daily Work Hours</label>
+                <select id="riskHours" class="form-control"><option value="">Select hours</option><option value="1">8+ hours</option><option value="2">6–8 hours</option><option value="3">3–5 hours</option><option value="4">Not working</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label"><i class="fas fa-users"></i>Parent Employment</label>
+                <select id="riskEmployment" class="form-control"><option value="">Select status</option><option value="1">Both unemployed</option><option value="2">One employed (low)</option><option value="3">Both employed (low)</option><option value="4">Stable employment</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label"><i class="fas fa-map-marker-alt"></i>Location Type</label>
+                <select id="riskLocation" class="form-control"><option value="">Select type</option><option value="1">Remote tribal</option><option value="2">Rural village</option><option value="3">Semi-urban</option><option value="4">Urban city</option></select>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100" style="padding:13px;font-size:0.95rem;font-family:var(--font-display);font-weight:800" onclick="predictRisk()">
+              <i class="fas fa-brain"></i> Generate Risk Prediction
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <div class="card accent-purple mb-4">
+            <div class="card-header"><div class="card-title">Prediction Result</div><span class="ai-chip">Real-time Analysis</span></div>
+            <div class="risk-result-area" id="riskResult">
+              <div class="risk-placeholder">
+                <i class="fas fa-robot"></i>
+                <p>Complete the form and click<br><strong>Generate Risk Prediction</strong><br>to receive AI-powered assessment</p>
+              </div>
+            </div>
+          </div>
+          <div class="card accent-cyan">
+            <div class="card-header"><div class="card-title">Risk Factor Radar</div></div>
+            <canvas id="radarChart" height="240"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: AWARENESS ════════════════════ -->
+    <section class="page" id="page-awareness">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>Awareness Center</h2>
+        <p>Laws, government schemes, rights and NGO support programs</p>
+      </div>
+      <div class="tab-bar" data-aos="fade-up">
+        <button class="tab-btn active" data-tab="laws">⚖️ Laws</button>
+        <button class="tab-btn" data-tab="schemes">💰 Schemes</button>
+        <button class="tab-btn" data-tab="rights">🛡️ Rights</button>
+        <button class="tab-btn" data-tab="ngoprog">🤝 NGO Programs</button>
+      </div>
+      <!-- Laws -->
+      <div class="tab-pane active" id="tab-laws">
+        <div class="row g-4" id="lawsGrid"></div>
+      </div>
+      <!-- Schemes -->
+      <div class="tab-pane" id="tab-schemes">
+        <div class="row g-4" id="schemesGrid"></div>
+      </div>
+      <!-- Rights -->
+      <div class="tab-pane" id="tab-rights">
+        <div class="card mb-4"><h5 class="mb-4" style="font-family:var(--font-display);font-weight:800">Fundamental Rights of Every Child in India</h5><div class="rights-grid" id="rightsGrid"></div></div>
+      </div>
+      <!-- NGO Programs -->
+      <div class="tab-pane" id="tab-ngoprog">
+        <div class="row g-4" id="ngoProgGrid"></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: RESCUE ════════════════════ -->
+    <section class="page" id="page-rescue">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>Rescue &amp; Complaint System</h2>
+        <p>File complaints, track rescue operations and view case statistics</p>
+      </div>
+      <!-- Quick stats -->
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3" data-aos="fade-up"><div class="stat-card sc-blue"><div class="sc-top"><div class="sc-icon"><i class="fas fa-file-circle-plus"></i></div></div><div><span class="sc-label">Total Complaints</span><span class="sc-value counter" data-target="8742">0</span></div></div></div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="60"><div class="stat-card sc-orange"><div class="sc-top"><div class="sc-icon"><i class="fas fa-spinner"></i></div></div><div><span class="sc-label">Under Investigation</span><span class="sc-value counter" data-target="1823">0</span></div></div></div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="120"><div class="stat-card sc-green"><div class="sc-top"><div class="sc-icon"><i class="fas fa-circle-check"></i></div></div><div><span class="sc-label">Resolved</span><span class="sc-value counter" data-target="6241">0</span></div></div></div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="180"><div class="stat-card sc-red"><div class="sc-top"><div class="sc-icon"><i class="fas fa-siren-on"></i></div></div><div><span class="sc-label">Escalated</span><span class="sc-value counter" data-target="678">0</span></div></div></div>
+      </div>
+      <!-- Rescue timeline -->
+      <div class="card mb-4 accent-green" data-aos="fade-up">
+        <div class="card-header"><div class="card-title"><i class="fas fa-route me-2" style="color:var(--success)"></i>Rescue Operation Tracker — Case CL-2025-48290</div></div>
+        <div class="rescue-timeline" id="rescueTimeline"></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-7" data-aos="fade-right">
+          <div class="card accent-blue">
+            <div class="card-header"><div class="card-title"><i class="fas fa-file-pen me-2" style="color:var(--primary-light)"></i>File a New Complaint</div></div>
+            <div class="row g-3">
+              <div class="col-md-6"><div class="form-group"><label class="form-label"><i class="fas fa-user"></i>Child Name</label><input type="text" class="form-control" placeholder="Name (if known)" id="cName" /></div></div>
+              <div class="col-md-6"><div class="form-group"><label class="form-label"><i class="fas fa-map-marker-alt"></i>Location</label><input type="text" class="form-control" placeholder="State, District, Area" id="cLoc" /></div></div>
+              <div class="col-md-6"><div class="form-group"><label class="form-label"><i class="fas fa-hammer"></i>Type of Labour</label><select class="form-control" id="cType"><option value="">Select type</option><option>Factory / Manufacturing</option><option>Construction Site</option><option>Agriculture</option><option>Domestic Work</option><option>Hotel / Restaurant</option><option>Street Vending</option><option>Mining</option><option>Other</option></select></div></div>
+              <div class="col-md-6"><div class="form-group"><label class="form-label"><i class="fas fa-exclamation-triangle"></i>Priority</label><select class="form-control" id="cPriority"><option>Low</option><option>Medium</option><option selected>High</option><option>Critical</option></select></div></div>
+              <div class="col-12"><div class="form-group"><label class="form-label"><i class="fas fa-align-left"></i>Description</label><textarea class="form-control" placeholder="Describe the situation in detail…" rows="3" id="cDesc"></textarea></div></div>
+              <div class="col-12">
+                <div class="upload-zone" id="uploadZone">
+                  <i class="fas fa-cloud-arrow-up"></i>
+                  <p>Drag &amp; drop evidence photo/video or <span onclick="document.getElementById('fileIn').click()">browse</span></p>
+                  <small>Supports JPG, PNG, MP4 · Max 10 MB</small>
+                  <input type="file" id="fileIn" accept="image/*,video/*" hidden />
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex gap-3 flex-wrap">
+                  <button class="btn btn-primary flex-fill" onclick="submitComplaint()"><i class="fas fa-paper-plane"></i> Submit Complaint</button>
+                  <button class="btn btn-ghost" onclick="trackComplaint()"><i class="fas fa-magnifying-glass"></i> Track Complaint</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5" data-aos="fade-left">
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title">Complaint Status</div></div>
+            <canvas id="complaintPie" height="200"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Emergency Helplines</div></div>
+            <div class="helpline-grid">
+              <div class="helpline-card"><div class="hlc-icon ai-blue"><i class="fas fa-phone"></i></div><div><span class="hlc-name">Childline India</span><span class="hlc-num">1098</span></div></div>
+              <div class="helpline-card"><div class="hlc-icon ai-red"><i class="fas fa-shield"></i></div><div><span class="hlc-name">Police Emergency</span><span class="hlc-num">100</span></div></div>
+              <div class="helpline-card"><div class="hlc-icon ai-green"><i class="fas fa-child"></i></div><div><span class="hlc-name">NCPCR Helpline</span><span class="hlc-num">1800-121-2830</span></div></div>
+              <div class="helpline-card"><div class="hlc-icon ai-purple"><i class="fas fa-briefcase"></i></div><div><span class="hlc-name">Labour Dept.</span><span class="hlc-num">1800-180-5412</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: MAP ════════════════════ -->
+    <section class="page" id="page-map">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>India Live Interactive Map</h2>
+        <p>State-wise child labour distribution — click any state for detailed statistics</p>
+      </div>
+      <div class="map-controls" data-aos="fade-up">
+        <div class="map-search">
+          <i class="fas fa-search" style="color:var(--text-3)"></i>
+          <input type="text" placeholder="Search state…" id="mapSearch" oninput="filterMapState()" />
+        </div>
+        <div class="map-legend">
+          <h6>Risk Legend</h6>
+          <div class="leg-item"><div class="leg-dot" style="background:#10B981"></div> Low Risk</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#F59E0B"></div> Medium Risk</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#EF4444"></div> High Risk</div>
+        </div>
+        <div class="d-flex gap-2 ms-auto">
+          <button class="btn btn-ghost btn-sm" onclick="resetMap()"><i class="fas fa-expand"></i> Reset View</button>
+          <button class="btn btn-ghost btn-sm" id="heatmapToggle" onclick="toggleHeatmap()"><i class="fas fa-fire"></i> Heatmap</button>
+        </div>
+      </div>
+      <div class="card mb-4" data-aos="fade-up" style="padding:0;overflow:hidden">
+        <div id="indiaMap"></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-8" data-aos="fade-right">
+          <div class="card accent-red">
+            <div class="card-header"><div class="card-title">High-Risk States Overview</div></div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead><tr><th>Rank</th><th>State</th><th>Cases</th><th>Rescued</th><th>Enrolled</th><th>NGOs</th><th>Risk</th></tr></thead>
+                <tbody id="stateTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="card" style="height:100%">
+            <div class="card-header"><div class="card-title">Quick State Lookup</div></div>
+            <div id="stateQuickList" style="max-height:320px;overflow-y:auto"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: NGO ════════════════════ -->
+    <section class="page" id="page-ngo">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>NGO Management Panel</h2>
+        <p>Monitor partner NGO performance, active cases and rankings</p>
+      </div>
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3" data-aos="fade-up"><div class="stat-card sc-blue"><div class="sc-top"><div class="sc-icon"><i class="fas fa-building-ngo"></i></div></div><div><span class="sc-label">Active NGOs</span><span class="sc-value counter" data-target="347">0</span></div></div></div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="60"><div class="stat-card sc-purple"><div class="sc-top"><div class="sc-icon"><i class="fas fa-folder-open"></i></div></div><div><span class="sc-label">Active Cases</span><span class="sc-value counter" data-target="4821">0</span></div></div></div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="120"><div class="stat-card sc-green"><div class="sc-top"><div class="sc-icon"><i class="fas fa-heart"></i></div></div><div><span class="sc-label">Children Helped</span><span class="sc-value counter" data-target="29415">0</span></div></div></div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="180"><div class="stat-card sc-orange"><div class="sc-top"><div class="sc-icon"><i class="fas fa-trophy"></i></div></div><div><span class="sc-label">Avg Success Rate</span><span class="sc-value">84%</span></div></div></div>
+      </div>
+      <div class="card" data-aos="fade-up">
+        <div class="card-header">
+          <div class="card-title">NGO Performance Leaderboard</div>
+          <input type="text" class="form-control" style="width:200px" placeholder="Search NGO…" id="ngoSearch" oninput="filterNGO()" />
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead><tr><th>Rank</th><th>NGO Name</th><th>Location</th><th>Active Cases</th><th>Children Helped</th><th>States</th><th>Success Rate</th><th>Status</th></tr></thead>
+            <tbody id="ngoTableBody"></tbody>
+          </table>
+        </div>
+        <div class="table-pagination">
+          <span id="ngoPageInfo">Showing 1–5 of 12</span>
+          <div class="d-flex gap-2">
+            <button class="btn btn-ghost btn-sm" onclick="ngoPage(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="btn btn-ghost btn-sm" onclick="ngoPage(1)"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: REPORTS ════════════════════ -->
+    <section class="page" id="page-reports">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>Reports &amp; Downloads</h2>
+        <p>Generate, download and share comprehensive monitoring reports</p>
+      </div>
+      <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-3" data-aos="fade-up"><div class="report-card" onclick="genReport('monthly-pdf')"><div class="rc-icon rc-blue"><i class="fas fa-file-pdf"></i></div><h4>Monthly PDF Report</h4><p>Full monthly summary with all statistics, charts and trends</p><div class="rc-meta"><span><i class="fas fa-calendar"></i> June 2025</span><span><i class="fas fa-check-circle" style="color:var(--success)"></i> Ready</span></div><button class="btn btn-primary w-100"><i class="fas fa-download"></i> Download PDF</button></div></div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="80"><div class="report-card" onclick="genReport('excel')"><div class="rc-icon rc-green"><i class="fas fa-file-excel"></i></div><h4>Annual Excel Report</h4><p>Complete year data in Excel spreadsheet with pivot tables</p><div class="rc-meta"><span><i class="fas fa-calendar"></i> Year 2025</span><span><i class="fas fa-check-circle" style="color:var(--success)"></i> Ready</span></div><button class="btn btn-ghost w-100"><i class="fas fa-download"></i> Download Excel</button></div></div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="160"><div class="report-card" onclick="genReport('state')"><div class="rc-icon rc-purple"><i class="fas fa-map"></i></div><h4>State-wise Report</h4><p>Per-state breakdowns with rescue, awareness and NGO data</p><div class="rc-meta"><span><i class="fas fa-map-marker-alt"></i> All States</span><span><i class="fas fa-check-circle" style="color:var(--success)"></i> Ready</span></div><button class="btn btn-ghost w-100"><i class="fas fa-download"></i> Download</button></div></div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="240"><div class="report-card"><div class="rc-icon rc-orange"><i class="fas fa-sliders"></i></div><h4>Custom Report</h4><p>Select date range, state and parameters to generate on-demand</p><div class="rc-meta"><span><i class="fas fa-gear"></i> Configurable</span><span><i class="fas fa-clock" style="color:var(--warning)"></i> On-demand</span></div><button class="btn btn-ghost w-100"><i class="fas fa-plus"></i> Configure</button></div></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-8" data-aos="fade-right">
+          <div class="card accent-blue">
+            <div class="card-header"><div><div class="card-title">Predictive Trend Forecast</div><div class="card-sub">AI-generated 4-year projection</div></div><span class="ai-chip"><i class="fas fa-chart-line"></i> Forecasted</span></div>
+            <canvas id="forecastChart" height="110"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="card" style="height:100%">
+            <div class="card-header"><div class="card-title">Recent Downloads</div></div>
+            <div id="recentReports"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: RECOMMENDATIONS ════════════════════ -->
+    <section class="page" id="page-recommendations">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>AI-Powered Recommendations</h2>
+        <p>Machine learning–driven policy suggestions for 2025–2026</p>
+      </div>
+      <div class="card mb-4" style="background:linear-gradient(135deg,rgba(79,70,229,0.07),rgba(6,182,212,0.04));border-color:rgba(79,70,229,0.2)" data-aos="fade-up">
+        <div class="card-header"><div><div class="card-title"><i class="fas fa-brain me-2" style="color:var(--accent)"></i>Strategic Recommendations</div></div><span class="ai-chip"><i class="fas fa-microchip"></i>CLDAS Intelligence</span></div>
+        <div class="row g-4" id="recCards"></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="card accent-cyan"><div class="card-header"><div class="card-title">Impact Forecast (2025–2027)</div></div><canvas id="impactChart" height="180"></canvas></div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <div class="card"><div class="card-header"><div class="card-title">Priority Action Matrix</div></div><div class="prio-grid" id="prioMatrix"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: CALENDAR ════════════════════ -->
+    <section class="page" id="page-calendar">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>Campaign Calendar</h2>
+        <p>Scheduled awareness campaigns, rescue operations and events</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-8" data-aos="fade-right">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title" id="calTitle">June 2025</div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-ghost btn-sm btn-icon" onclick="calNav(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-ghost btn-sm btn-icon" onclick="calNav(1)"><i class="fas fa-chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="cal-grid-header" id="calDayLabels"></div>
+            <div class="cal-days" id="calDays"></div>
+          </div>
+        </div>
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Upcoming Events</div></div>
+            <div id="calEventList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════ PAGE: SETTINGS ════════════════════ -->
+    <section class="page" id="page-settings">
+      <div class="page-hdr" data-aos="fade-down">
+        <h2>System Settings</h2>
+        <p>Configure preferences, notifications and account details</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4" data-aos="fade-right">
+          <div class="profile-card mb-4">
+            <div class="profile-avatar-lg"><i class="fas fa-user-shield"></i></div>
+            <h4 class="mt-2" style="font-family:var(--font-display);font-weight:800">Admin Officer</h4>
+            <p style="color:var(--text-2);font-size:0.82rem">Ministry of Labour &amp; Employment</p>
+            <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-3)">ID: GOI-MLE-2024-0041</p>
+            <button class="btn btn-ghost w-100 mt-3"><i class="fas fa-pen"></i> Edit Profile</button>
+          </div>
+          <div class="card">
+            <h6 style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-3);margin-bottom:14px">System Health</h6>
+            <div class="prog-row"><div class="prog-label"><span>Server Load</span><span>42%</span></div><div class="progress-track"><div class="progress-fill pf-green" style="width:42%"></div></div></div>
+            <div class="prog-row"><div class="prog-label"><span>Database Usage</span><span>68%</span></div><div class="progress-track"><div class="progress-fill pf-warn" style="width:68%"></div></div></div>
+            <div class="prog-row mb-0"><div class="prog-label"><span>API Uptime</span><span>99.8%</span></div><div class="progress-track"><div class="progress-fill pf-blue" style="width:99.8%"></div></div></div>
+          </div>
+        </div>
+        <div class="col-lg-8" data-aos="fade-left">
+          <div class="card mb-4">
+            <div class="settings-section">
+              <h4>Display Settings</h4>
+              <div class="setting-row"><div><strong>Dark Mode</strong><p>Toggle between dark and light interface theme</p></div><label class="toggle"><input type="checkbox" id="darkToggle" checked onchange="toggleThemeSettings()" /><div class="toggle-track"></div></label></div>
+              <div class="setting-row"><div><strong>Compact Mode</strong><p>Reduce padding for denser information display</p></div><label class="toggle"><input type="checkbox" /><div class="toggle-track"></div></label></div>
+              <div class="setting-row"><div><strong>Animations</strong><p>Enable page transition and chart animations</p></div><label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label></div>
+            </div>
+            <div class="settings-section mb-0">
+              <h4>Notification Settings</h4>
+              <div class="setting-row"><div><strong>High-Risk Alerts</strong><p>Immediate notifications for critical risk detections</p></div><label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label></div>
+              <div class="setting-row"><div><strong>New Complaints</strong><p>Alert when new complaints are filed on the system</p></div><label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label></div>
+              <div class="setting-row"><div><strong>Report Ready</strong><p>Notify when scheduled reports are generated</p></div><label class="toggle"><input type="checkbox" /><div class="toggle-track"></div></label></div>
+              <div class="setting-row mb-0"><div><strong>Real-time Updates</strong><p>Auto-refresh dashboard statistics every 60 seconds</p></div><label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /content-area -->
+</div><!-- /main-wrapper -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHATBOT
+════════════════════════════════════════════════════════════════ -->
+<button class="chat-fab" id="chatFab" title="AI Assistant">
+  <div class="chat-fab-pulse"></div>
+  <i class="fas fa-robot"></i>
+</button>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-head">
+    <div class="chat-bot-avatar"><i class="fas fa-robot"></i></div>
+    <div>
+      <span class="chat-bot-name">CLDAS AI Assistant</span>
+      <span class="chat-status-line"><span class="chat-status-dot"></span>Online · Ready</span>
+    </div>
+    <button class="chat-close" id="chatClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot">
+      <div class="msg-av"><i class="fas fa-robot"></i></div>
+      <div class="msg-bubble">Hello! I'm <strong>CLDAS AI</strong> — your assistant for child labour awareness. Ask me about laws, helplines, rescue procedures or government schemes. 🤝</div>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="cq-btn" onclick="sendQuick('Childline number?')">📞 Childline</button>
+    <button class="cq-btn" onclick="sendQuick('What are child labour laws?')">⚖️ Laws</button>
+    <button class="cq-btn" onclick="sendQuick('How to report child labour?')">🚨 Report</button>
+    <button class="cq-btn" onclick="sendQuick('Government schemes for children?')">📋 Schemes</button>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask about child labour laws, helplines…" onkeydown="if(event.key==='Enter')sendChat()" />
+    <button class="chat-send" onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL
+════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">Details</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
