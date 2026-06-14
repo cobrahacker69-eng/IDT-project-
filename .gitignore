@@ -1,0 +1,9 @@
+# Ignore everything by default
+*
+
+# Exceptions
+!index.html
+!style.css
+!script.js
+!README.md
+!.gitignore
